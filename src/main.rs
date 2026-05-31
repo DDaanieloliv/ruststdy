@@ -1,4 +1,4 @@
-const CONST_VAR: i32 = 00;                      // NOT ALLOWED: be mutabel
+const CONST_VAR: i32 = 00;                      
 static STATIC_VAR: i32 = 00;                    // IS UNSAFE: be mutabel
 static mut MUTABLE_STATIC_VAR: i32 = 700;       // IS UNSAFE: be mutabel
 
@@ -12,12 +12,12 @@ fn main() {
 
     print_static_and_constant();
     unsafe {
-        MUTABLE_STATIC_VAR = 00;                // SUSCEPTIBLE TO: data-race
-        println!("NEW OUTPUT: i32 -> {}", MUTABLE_STATIC_VAR + 7);
+        MUTABLE_STATIC_VAR = 7;                // SUSCEPTIBLE: data-race
+        println!("[AVAILABLE]  The 'unsafe' keyword to declare the existence of contracts the compiler can't check, like the approach of mutate a static var -> {}", std::ptr::read(&raw const MUTABLE_STATIC_VAR));
     }
 }
 
 fn print_static_and_constant() {
     println!("[AVAILABLE]  CONTANTS 'const', of global scope, declared in UPPER_SNAKE_CASE and IMUTABLE -> {}", CONST_VAR);
-    println!("[AVAILABLE]  STATIC 'static', of global scope, declared in UPPER_SNAKE_CASE and availabel to be MUTABLE by 'mut' (how ever susceptible to data-race -> {}", STATIC_VAR);
+    println!("[AVAILABLE]  STATIC 'static', of global scope, declared in UPPER_SNAKE_CASE and availabel to be MUTABLE by 'mut' (how ever susceptible to data-race) -> {}", STATIC_VAR);
 }
