@@ -45,6 +45,7 @@ pub fn type_overview() {
         var,
         &var
     );
+
     let var: &str = "!!!";
     println!(
         "{} Redeclare a existing variable {} and releasing the previous scope in memory, {} -> {} in {:p}",
@@ -55,7 +56,7 @@ pub fn type_overview() {
         &var
     );
 
-    print_static_and_constant();
+    static_and_constant();
     unsafe {
         MUTABLE_STATIC_VAR = 7;
         println!(
@@ -72,8 +73,144 @@ pub fn type_overview() {
 
     unsigned_integers();
 
+    char_bool_types();
+
     floats();
 
+    smt_pointer_types();
+
+    compound_types();
+
+    utilitarian_data_type();
+
+    slice_data_type();
+
+    unsafe_data_type();
+
+    collection_types();
+
+    control_types();
+        
+    custom_type();
+}
+
+fn utilitarian_data_type() {
+    let unit: () = ();
+    println!(
+        "\n{} Unit Type, E.G, {}. A zero-sized type representing the absence of a value (similar to void) -> {:?}",
+        "[UTILITARIAN DATA-TYPE]".bold().truecolor(152, 251, 152),
+        "()".bold().truecolor(152, 251, 152),
+        unit
+    );
+}
+
+fn slice_data_type() {
+    let slice: &str = "Hello, Rust!";
+    println!(
+        "{} String Slice, E.G, {}. An {} reference to a UTF-8 sequence stored somewhere in memory -> \"{}\"",
+        "[SLICE DATA-TYPE]".bold().truecolor(152, 251, 152),
+        "&str".bold().truecolor(152, 251, 152),
+        "IMMUTABLE".bold().truecolor(152, 251, 152),
+        slice
+    );
+}
+
+
+fn unsafe_data_type() {
+    let mut number: i32 = 42;
+    let raw_const: *const i32 = &raw const number;
+    let raw_mut: *mut i32 = &raw mut number;
+    unsafe {
+        println!(
+            "{} Raw Pointers, E.G, {}. C-style pointers used to point directly to memory addresses const: {:?}, mut: {:?}) -> value: {}",
+            "[UNSAFE DATA-TYPE]".bold().truecolor(152, 251, 152),
+            "*const T / *mut T".bold().truecolor(152, 251, 152),
+            raw_const,
+            raw_mut,
+            *raw_const
+        );
+    }
+}
+
+
+fn collection_types() {
+    let vector: Vec<i32> = vec![10, 20, 30];
+    println!(
+        "\n{} Vector, E.G, {}. A {} allocated on the heap -> {:?}",
+        "[COLLECTION DATA-TYPE]".bold().truecolor(152, 251, 152),
+        "dynamically growable array".bold().truecolor(152, 251, 152),
+        "Vec<T>".bold().truecolor(152, 251, 152),
+        vector
+    );
+
+    let mut map: HashMap<&str, i32> = HashMap::new();
+    map.insert("Rust", 2026);
+    println!(
+        "{} HashMap, E.G, {}. A key-value dictionary for fast lookups -> {:?}",
+        "[COLLECTION DATA-TYPE]".bold().truecolor(152, 251, 152),
+        "HashMap<K, V>".bold().truecolor(152, 251, 152),
+        map
+    );
+}
+
+fn control_types() {
+    let option_val: Option<i32> = Some(42);
+    println!(
+        "\n{} Option, E.G, {}. Type representing the presence (Some) or absence (None) of a value -> {:?}",
+        "[CONTROL DATA-TYPE]".bold().truecolor(152, 251, 152),
+        "Option<T>".bold().truecolor(152, 251, 152),
+        option_val
+    );
+
+    let result_val: Result<&str, &str> = Ok("Operação bem-sucedida");
+    println!(
+        "{} Result, E.G, {}. Type for error handling representing success (Ok) or failure (Err) -> {:?}",
+        "[CONTROL DATA-TYPE]".bold().truecolor(152, 251, 152),
+        "Result<T, E>".bold().truecolor(152, 251, 152),
+        result_val
+    );
+}       
+
+fn custom_type() {
+    let usr_struct = Usr { name: String::from("Alex"), age: 30 };
+    println!(
+        "\n{} Struct, E.G, {}. A custom structure to group named fields -> {:?}",
+        "[CUSTOM DATA-TYPE]".bold().truecolor(152, 251, 152),
+        "struct".bold().truecolor(152, 251, 152),
+        usr_struct
+    );
+
+    let enum_status = Status::Active;
+    println!(
+        "\n{} Enum, E.G, {}. An algebraic data type representing one of multiple variants -> {:?}",
+        "[CUSTOM DATA-TYPE]".bold().truecolor(152, 251, 152),
+        "enum".bold().truecolor(152, 251, 152),
+        enum_status
+    );
+}
+
+fn compound_types() {
+    let tuple: (bool, i32, bool) = (true, 7, true);
+    println!(
+        "\n{} Tuple, E.G, {}. A fixed-size collection that can group different types -> ({}, {}, {})",
+        "[COMPOUND DATA-TYPE]".bold().truecolor(152, 251, 152),
+        "(bool, i32, bool)".bold().truecolor(152, 251, 152),
+        tuple.0,
+        tuple.1,
+        tuple.2
+    );
+
+    let arr: [char; 4] = ['a', 'b', 'c', 'd'];
+    println!(
+        "{} Array: {}. A fixed-size collection where all elements must be of the same type, stored on the Stack -> {:?}",
+        "[COMPOUND DATA-TYPE]".bold().truecolor(152, 251, 152),
+        "'let arr: [char; 4] = [...]'".bold().truecolor(152, 251, 152),
+        arr,
+    );
+}
+
+
+fn char_bool_types() {
     println!(
         "\n{} {}. As a {} boolean type",
         "[DATA-TYPE]".bold().truecolor(152, 251, 152),
@@ -97,106 +234,10 @@ pub fn type_overview() {
         "'let [mut] str: String = String::from(\"...\")'".bold().truecolor(152, 251, 152),
         string
     );
+}
 
-    let tuple: (bool, i32, bool) = (true, 7, true);
-    println!(
-        "\n{} Tuple, E.G, {}. A fixed-size collection that can group different types -> ({}, {}, {})",
-        "[COMPOUND DATA-TYPE]".bold().truecolor(152, 251, 152),
-        "(bool, i32, bool)".bold().truecolor(152, 251, 152),
-        tuple.0,
-        tuple.1,
-        tuple.2
-    );
 
-    let arr: [char; 4] = ['a', 'b', 'c', 'd'];
-    println!(
-        "{} Array: {}. A fixed-size collection where all elements must be of the same type, stored on the Stack -> {:?}",
-        "[COMPOUND DATA-TYPE]".bold().truecolor(152, 251, 152),
-        "'let arr: [char; 4] = [...]'".bold().truecolor(152, 251, 152),
-        arr,
-    );
-
-    let unit: () = ();
-    println!(
-        "\n{} Unit Type, E.G, {}. A zero-sized type representing the absence of a value (similar to void) -> {:?}",
-        "[UTILITARIAN DATA-TYPE]".bold().truecolor(152, 251, 152),
-        "()".bold().truecolor(152, 251, 152),
-        unit
-    );
-
-    let slice: &str = "Hello, Rust!";
-    println!(
-        "{} String Slice, E.G, {}. An {} reference to a UTF-8 sequence stored somewhere in memory -> \"{}\"",
-        "[SLICE DATA-TYPE]".bold().truecolor(152, 251, 152),
-        "&str".bold().truecolor(152, 251, 152),
-        "IMMUTABLE".bold().truecolor(152, 251, 152),
-        slice
-    );
-
-    let mut number: i32 = 42;
-    let raw_const: *const i32 = &raw const number;
-    let raw_mut: *mut i32 = &raw mut number;
-    unsafe {
-        println!(
-            "{} Raw Pointers, E.G, {}. C-style pointers used to point directly to memory addresses const: {:?}, mut: {:?}) -> value: {}",
-            "[UNSAFE DATA-TYPE]".bold().truecolor(152, 251, 152),
-            "*const T / *mut T".bold().truecolor(152, 251, 152),
-            raw_const,
-            raw_mut,
-            *raw_const
-        );
-    }
-
-    let vector: Vec<i32> = vec![10, 20, 30];
-    println!(
-        "\n{} Vector, E.G, {}. A {} allocated on the heap -> {:?}",
-        "[COLLECTION DATA-TYPE]".bold().truecolor(152, 251, 152),
-        "dynamically growable array".bold().truecolor(152, 251, 152),
-        "Vec<T>".bold().truecolor(152, 251, 152),
-        vector
-    );
-
-    let mut map: HashMap<&str, i32> = HashMap::new();
-    map.insert("Rust", 2026);
-    println!(
-        "{} HashMap, E.G, {}. A key-value dictionary for fast lookups -> {:?}",
-        "[COLLECTION DATA-TYPE]".bold().truecolor(152, 251, 152),
-        "HashMap<K, V>".bold().truecolor(152, 251, 152),
-        map
-    );
-
-    let option_val: Option<i32> = Some(42);
-    println!(
-        "\n{} Option, E.G, {}. Type representing the presence (Some) or absence (None) of a value -> {:?}",
-        "[CONTROL DATA-TYPE]".bold().truecolor(152, 251, 152),
-        "Option<T>".bold().truecolor(152, 251, 152),
-        option_val
-    );
-
-    let result_val: Result<&str, &str> = Ok("Operação bem-sucedida");
-    println!(
-        "{} Result, E.G, {}. Type for error handling representing success (Ok) or failure (Err) -> {:?}",
-        "[CONTROL DATA-TYPE]".bold().truecolor(152, 251, 152),
-        "Result<T, E>".bold().truecolor(152, 251, 152),
-        result_val
-    );
-
-    let usr_struct = Usr { name: String::from("Alex"), age: 30 };
-    println!(
-        "\n{} Struct, E.G, {}. A custom structure to group named fields -> {:?}",
-        "[CUSTOM DATA-TYPE]".bold().truecolor(152, 251, 152),
-        "struct".bold().truecolor(152, 251, 152),
-        usr_struct
-    );
-
-    let enum_status = Status::Active;
-    println!(
-        "\n{} Enum, E.G, {}. An algebraic data type representing one of multiple variants -> {:?}",
-        "[CUSTOM DATA-TYPE]".bold().truecolor(152, 251, 152),
-        "enum".bold().truecolor(152, 251, 152),
-        enum_status
-    );
-
+fn smt_pointer_types() {
     let boxed_num = Box::new(100);
     println!(
         "\n{} Box, E.G, {}. Smart pointer for explicit heap allocation -> Value: {}",
@@ -234,7 +275,7 @@ pub fn type_overview() {
 
 
 
-fn print_static_and_constant() {
+fn static_and_constant() {
     println!(
         "{} CONTANTS {}, of {}, declared in UPPER_SNAKE_CASE and {} -> {} in {:p}",
         "[AVAILABLE]".bold().truecolor(152, 251, 152),
