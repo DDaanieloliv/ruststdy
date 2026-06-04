@@ -1,5 +1,6 @@
 mod type_view;
 
+use ::colored::Colorize;
 use std::{
     mem::MaybeUninit,
     time::{Instant, SystemTime, UNIX_EPOCH},
@@ -21,19 +22,31 @@ struct Timespec {
 fn main() {
     type_overview();
 
-    let var: i64 = 7;
+    let mut var: i64 = 7;
     /// double-referencing var pointer!
-    fn dosmt(var: &i64) -> &i64 {
+    /// defining &var inside of fn = ref created on stack-frame
+    fn dosmt(var: &mut i64) -> &i64 {
+        println!("{:p}", var);
+        println!("{:p}", &var);
+        println!("{:p}", &&var);
+        *var += 0;
+        &(*var)
+    }
+
+    fn doesmt(var: &i64) -> &i64 {
         println!("{:p}", var);
         println!("{:p}", &var);
         println!("{:p}", &&var);
         &&var
     }
 
-    dosmt(&var);
+    let x_return = doesmt(&var);
+    let w_return = dosmt(&mut var);
+
     unix_epoch();
     coarse_clock();
     libc_coarse_clock();
+
 }
 
 
@@ -71,10 +84,8 @@ fn libc_coarse_clock() {
     let m = (secs % 3600) / 60;
     let utc_hour = (h + 24 - 3) % 24;
     println!(
-        "libc clock_time -> {:02}:{:02} in {:?}",
-        utc_hour,
-        m,
-        init.elapsed()
+        "libc clock_time -> {}",
+        format!("{:02}:{:02} in {:?}", utc_hour, m, init.elapsed()).blue()
     );
 }
 
