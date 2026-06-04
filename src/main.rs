@@ -1,11 +1,13 @@
 mod type_view;
+mod deref_look;
 
 use ::colored::Colorize;
+use deref_look::deref_look;
+use type_view::type_overview;
 use std::{
     mem::MaybeUninit,
     time::{Instant, SystemTime, UNIX_EPOCH},
 };
-use type_view::type_overview;
 
 const CLOCK_REALTIME_COARSE: i32 = 5;
 
@@ -21,27 +23,7 @@ struct Timespec {
 
 fn main() {
     type_overview();
-
-    let mut var: i64 = 7;
-    /// double-referencing var pointer!
-    /// defining &var inside of fn = ref created on stack-frame
-    fn dosmt(var: &mut i64) -> &i64 {
-        println!("{:p}", var);
-        println!("{:p}", &var);
-        println!("{:p}", &&var);
-        *var += 0;
-        &(*var)
-    }
-
-    fn doesmt(var: &i64) -> &i64 {
-        println!("{:p}", var);
-        println!("{:p}", &var);
-        println!("{:p}", &&var);
-        &&var
-    }
-
-    let x_return = doesmt(&var);
-    let w_return = dosmt(&mut var);
+    deref_look();
 
     unix_epoch();
     coarse_clock();
