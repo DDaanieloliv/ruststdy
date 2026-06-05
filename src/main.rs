@@ -1,9 +1,9 @@
-mod type_view;
-mod deref_look;
+mod typs;
+mod borrow;
 
 use ::colored::Colorize;
-use deref_look::deref_look;
-use type_view::type_overview;
+use borrow::rust_borrow;
+use typs::rust_typs;
 use std::{
     mem::MaybeUninit,
     time::{Instant, SystemTime, UNIX_EPOCH},
@@ -22,8 +22,9 @@ struct Timespec {
 }
 
 fn main() {
-    type_overview();
-    deref_look();
+    rust_typs();
+    rust_borrow();
+    
 
     unix_epoch();
     coarse_clock();
