@@ -46,10 +46,8 @@ fn coarse_clock() {
     let m = (secs % 3600) / 60;
     let utc_hour = (h + 24 - 3) % 24;
     println!(
-        "coarse clock_time -> {:02}:{:02} in {:?}",
-        utc_hour,
-        m,
-        init.elapsed()
+        "coarse clock_time -> {}",
+        format!("{:02}:{:02} in {:?}", utc_hour, m, init.elapsed()).blue()
     );
 }
 
@@ -83,9 +81,7 @@ fn unix_epoch() {
     let m = (secs % 3600) / 60;
     let utc_hour = (h + 24 - 3) % 24;
     println!(
-        "timeSystem clock_time -> {:02}:{:02} in {:?}",
-        utc_hour,
-        m,
-        init.elapsed()
+        "timeSystem clock_time -> {}",
+        format!("{:02}:{:02} in {:?}", utc_hour, m, init.elapsed()).blue()
     );
 }

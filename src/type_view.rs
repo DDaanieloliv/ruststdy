@@ -46,6 +46,16 @@ pub fn type_overview() {
         &var
     );
 
+    let mut var = "!!";
+    let &mut nonvar = &mut var;
+    println!(
+        "{} A variable that handle a MUTABLE-REFERENCE by using {} on it's statement -> {} in {:p}",
+        "[MUTABLE-REFERENCE VARIABLE]".bold().truecolor(152, 251, 152),
+        "'let &mut var: &i32 = ...'".bold().truecolor(152, 251, 152),
+        var,
+        &var
+    );
+
     let var: &str = "!!!";
     println!(
         "{} Redeclare a existing variable {} and releasing the previous scope in memory, {} -> {} in {:p}",
@@ -97,7 +107,7 @@ pub fn type_overview() {
 fn utilitarian_data_type() {
     let unit: () = ();
     println!(
-        "\n{} Unit Type, E.G, {}. A zero-sized type representing the absence of a value (similar to void) -> {:?}",
+        "{} Unit Type, E.G, {}. A zero-sized type representing the absence of a value (similar to void) -> {:?}",
         "[UTILITARIAN DATA-TYPE]".bold().truecolor(152, 251, 152),
         "()".bold().truecolor(152, 251, 152),
         unit
@@ -136,7 +146,7 @@ fn unsafe_data_type() {
 fn collection_types() {
     let vector: Vec<i32> = vec![10, 20, 30];
     println!(
-        "\n{} Vector, E.G, {}. A {} allocated on the heap -> {:?}",
+        "{} Vector, E.G, {}. A {} allocated on the heap -> {:?}",
         "[COLLECTION DATA-TYPE]".bold().truecolor(152, 251, 152),
         "dynamically growable array".bold().truecolor(152, 251, 152),
         "Vec<T>".bold().truecolor(152, 251, 152),
@@ -156,7 +166,7 @@ fn collection_types() {
 fn control_types() {
     let option_val: Option<i32> = Some(42);
     println!(
-        "\n{} Option, E.G, {}. Type representing the presence (Some) or absence (None) of a value -> {:?}",
+        "{} Option, E.G, {}. Type representing the presence (Some) or absence (None) of a value -> {:?}",
         "[CONTROL DATA-TYPE]".bold().truecolor(152, 251, 152),
         "Option<T>".bold().truecolor(152, 251, 152),
         option_val
@@ -174,7 +184,7 @@ fn control_types() {
 fn custom_type() {
     let usr_struct = Usr { name: String::from("Alex"), age: 30 };
     println!(
-        "\n{} Struct, E.G, {}. A custom structure to group named fields -> {:?}",
+        "{} Struct, E.G, {}. A custom structure to group named fields -> {:?}",
         "[CUSTOM DATA-TYPE]".bold().truecolor(152, 251, 152),
         "struct".bold().truecolor(152, 251, 152),
         usr_struct
@@ -182,7 +192,7 @@ fn custom_type() {
 
     let enum_status = Status::Active;
     println!(
-        "\n{} Enum, E.G, {}. An algebraic data type representing one of multiple variants -> {:?}",
+        "{} Enum, E.G, {}. An algebraic data type representing one of multiple variants -> {:?}",
         "[CUSTOM DATA-TYPE]".bold().truecolor(152, 251, 152),
         "enum".bold().truecolor(152, 251, 152),
         enum_status
@@ -192,7 +202,7 @@ fn custom_type() {
 fn compound_types() {
     let tuple: (bool, i32, bool) = (true, 7, true);
     println!(
-        "\n{} Tuple, E.G, {}. A fixed-size collection that can group different types -> ({}, {}, {})",
+        "{} Tuple, E.G, {}. A fixed-size collection that can group different types -> ({}, {}, {})",
         "[COMPOUND DATA-TYPE]".bold().truecolor(152, 251, 152),
         "(bool, i32, bool)".bold().truecolor(152, 251, 152),
         tuple.0,
@@ -212,7 +222,7 @@ fn compound_types() {
 
 fn char_bool_types() {
     println!(
-        "\n{} {}. As a {} boolean type",
+        "{} {}. As a {} boolean type",
         "[DATA-TYPE]".bold().truecolor(152, 251, 152),
         "bool".bold().truecolor(152, 251, 152),
         "8 bits(1 byte)".bold().truecolor(152, 251, 152)
@@ -240,7 +250,7 @@ fn char_bool_types() {
 fn smt_pointer_types() {
     let boxed_num = Box::new(100);
     println!(
-        "\n{} Box, E.G, {}. Smart pointer for explicit heap allocation -> Value: {}",
+        "{} Box, E.G, {}. Smart pointer for explicit heap allocation -> Value: {}",
         "[SMART-POINTER DATA-TYPE]".bold().truecolor(152, 251, 152),
         "Box<T>".bold().truecolor(152, 251, 152),
         boxed_num
@@ -299,7 +309,6 @@ fn static_and_constant() {
 
 
 fn signed_integers() {
-    println!(" ");
     println!(
         "{} {}. As a {}, {} with interval of min and max -> {} and {}", 
         "[DATA-TYPE]".bold().truecolor(152, 251, 152),
@@ -355,7 +364,7 @@ fn signed_integers() {
 
 
 fn unsigned_integers() {
-    println!("\n{} {}. As a {}, {} with interval of min and max -> {} and {}",
+    println!("{} {}. As a {}, {} with interval of min and max -> {} and {}",
         "[DATA-TYPE]".bold().truecolor(152, 251, 152),
         "u8".bold().truecolor(152, 251, 152),
         "UNSIGNED integer".bold().truecolor(152, 251, 152),
@@ -404,7 +413,7 @@ fn unsigned_integers() {
 }
 
 fn floats()  { 
-    println!("\n{} {}. As a {}, {} 32 bits",
+    println!("{} {}. As a {}, {} 32 bits",
         "[DATA-TYPE]".bold().truecolor(152, 251, 152),
         "f32".bold().truecolor(152, 251, 152),
         "decimal type with simple precision (IEEE-754)".bold().truecolor(152, 251, 152),
