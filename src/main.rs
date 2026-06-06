@@ -1,9 +1,4 @@
-mod typs;
-mod borrow;
-
 use ::colored::Colorize;
-use borrow::rust_borrow;
-use typs::rust_typs;
 use std::{
     mem::MaybeUninit,
     time::{Instant, SystemTime, UNIX_EPOCH},
@@ -22,14 +17,9 @@ struct Timespec {
 }
 
 fn main() {
-    rust_typs();
-    rust_borrow();
-    
-
     unix_epoch();
     coarse_clock();
     libc_coarse_clock();
-
 }
 
 
@@ -42,7 +32,7 @@ fn coarse_clock() {
         t.assume_init().tv_sec
     };
 
-    let secs = (unix_epoch % 86400) as u32;
+    let secs = (unix_epoch % (24 * 60 * 60)) as u32;
     let h = (secs / 3600) as i32;
     let m = (secs % 3600) / 60;
     let utc_hour = (h + 24 - 3) % 24;
@@ -60,7 +50,9 @@ fn libc_coarse_clock() {
         libc::clock_gettime(libc::CLOCK_REALTIME_COARSE, t.as_mut_ptr());
         t.assume_init().tv_sec
     };
-    let secs = (unix_epoch % 86400) as u32;
+
+
+    let secs = (unix_epoch % (24 * 60 * 60)) as u32;
     let h = (secs / 3600) as i32;
     let m = (secs % 3600) / 60;
     let utc_hour = (h + 24 - 3) % 24;
