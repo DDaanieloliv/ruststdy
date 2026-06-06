@@ -2,9 +2,10 @@ use colored::Colorize;
 
 pub fn rust_borrow() {
     ownership();
+    move_ownership_semantics();
     borrowing();
     lifetime();
-    move_ownership_semantics();
+    aliasing_xor_mutability();
 }
 
 
@@ -18,10 +19,22 @@ fn ownership() {
     );
 }
 
+fn move_ownership_semantics() {
+    println!("{} The {}. {}, transferring back the ownership",
+        "[BORROW-CHECKER WARN]".bold().red(),
+        "Ownership MOVE semantics".yellow(),
+        "Passing a value to an func transfers the Ownership and the same when it returns".yellow(),
+    );
+}
+
 fn borrowing() {
-    println!("{} {}. To use a value without transferer the Ownership is created a reference, by using ´&T´, binding it to a func an borrowing it without transferer ownership",
+    println!("{} {}. To {} is created a {}, by using {} or {}, binding it to a func and borrowing it without transferer ownership",
         "[BORROW-CHECKER WARN]".bold().red(),
         "Borrowing".yellow(),
+        "use a value without transferer the Ownership".yellow(),
+        "reference".yellow(),
+        "´&T´".yellow(),
+        "´&mut T´ to modify it's value".yellow(),
     );
 }
 
@@ -32,10 +45,13 @@ fn lifetime() {
     );
 }
 
-fn move_ownership_semantics() {
-    println!("{} The {}. {}, transferring back the ownership",
-        "[BORROW-CHECKER WARN]".bold().red(),
-        "Ownership MOVE semantics".yellow(),
-        "Passing a value to an func transfers the Ownership and the same when it returns".yellow(),
+fn aliasing_xor_mutability() {
+    println!("{} The {}. May have {} {} {} at a time, {}",
+        "[BORROW-CHECKER RULE]".bold().red(),
+        "Aliasing or Mutability rule".red(),
+        "N° Imutable References(´&T´)".red(),
+        "or".yellow(),
+        "One Mutable Reference(´&mut T´)".red(),
+        "and no one Imutable ref can coexists with it".yellow(),
     );
 }
